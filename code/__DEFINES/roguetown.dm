@@ -39,11 +39,12 @@
 	/datum/species/demihuman, \
 	/datum/species/elf/dark,\
 	/datum/species/tieberian,\
-	/datum/species/anthromorphsmall,\
-	/datum/species/kobold, \
-	/datum/species/halforc
 
 #define RACES_TOLERATED \
+	/datum/species/goblinp, \
+	/datum/species/halforc, \
+	/datum/species/kobold, \
+	/datum/species/anthromorphsmall
 
 #define RACES_SHUNNED \
 
@@ -51,7 +52,6 @@
 
 
 #define RACES_GOBLIN \
-	/datum/species/goblinp
 
 #define RACES_SEELIE \
 	/datum/species/seelie	//Seelie having its own global define and nothing else will prevent allowing it via RACES_ALL_KINDS
@@ -298,17 +298,26 @@ GLOBAL_LIST_EMPTY(job_respawn_delays)
 	Currently used for classes
 */
 
+//General
 #define CTAG_ALLCLASS		"CAT_ALLCLASS"		// jus a define for allclass to not deal with actively typing strings
-#define CTAG_DISABLED 		"CAT_DISABLED" 		// Disabled, aka don't make it fuckin APPEAR
-#define CTAG_REFUGEE		"CAT_REFUGEE"  		// Refugee classes
-#define CTAG_TOWNER 		"CAT_TOWNER"  		// Villager class - Villagers can use it
-#define CTAG_ANTAG 			"CAT_ANTAG"  		// Antag class - results in an antag
+#define CTAG_DISABLED		"CAT_DISABLED"		// Disabled, aka don't make it fuckin APPEAR
+#define CTAG_CHALLENGE		"CAT_CHALLENGE"		// Challenge class - Meant to be free for everyone
+
+//City
+#define CTAG_TOWNER			"CAT_TOWNER"		// Villager class - Villagers can use it
+#define CTAG_MERCENARY		"CAT_MERCENARY"		// Mercs
+#define CTAG_HENCH			"CAT_HENCH"			// Whitevein Guards
+
+//Garrison
+#define CTAG_BOG			"CAT_BOG"			//Vanguard
+
+//Antags
 #define CTAG_BANDIT			"CAT_BANDIT"		// Bandit class - Tied to the bandit antag really
-#define CTAG_CHALLENGE 		"CAT_CHALLENGE"  	// Challenge class - Meant to be free for everyone
-#define CTAG_MERCENARY 		"CAT_MERCENARY" 	// Mercs
-#define CTAG_BOG 			"CAT_BOG"			//Vanguard
-#define CTAG_GOBS 			"CAT_GOBS"			// Goblin Guards
-#define CTAG_HENCH	 		"CAT_HENCH"			// Whitevein Guards
+#define CTAG_ANTAG			"CAT_ANTAG"			// Antag class - results in an antag
+#define CTAG_GOBS			"CAT_GOBS"			// Goblin Guards
+
+//Other
+#define CTAG_REFUGEE		"CAT_REFUGEE"		// Refugee classes
 
 /*
 	Defines for the triumph buy datum categories
