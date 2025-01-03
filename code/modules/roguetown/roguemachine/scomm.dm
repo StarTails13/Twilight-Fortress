@@ -1,7 +1,7 @@
 
 /obj/structure/roguemachine/scomm
-	name = "SCOM"
-	desc = "The Supernatural Communication Optical Machine is a wonder of magic and technology. There's a button in the middle with 'JABBER' etched on it."
+	name = "СКОМ"
+	desc = "Сверхъестественная Оптическая Машина Связи - это чудо магии и технологии. В центре есть кнопка с надписью 'БОЛТАТЬ'."
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "scomm1"
 	density = FALSE
@@ -29,14 +29,14 @@
 /obj/structure/roguemachine/scomm/examine(mob/user)
 	. = ..()
 	if(scom_number)
-		. += "Its designation is #[scom_number]."
+		. += "Её обозначение - #[scom_number]."
 	if(user.loc == loc)
-		. += "<b>THE LAWS OF THE LAND:</b>"
+		. += "<b>ЗАКОНЫ ЭТИХ ЗЕМЕЛЬ:</b>"
 		if(!length(GLOB.laws_of_the_land))
-			. += span_danger("The land has no laws! <b>We are doomed!</b>")
+			. += span_danger("У земли нет законов! <b>Мы обречены!</b>")
 			return
 		if(!user.is_literate())
-			. += span_warning("Uhhh... I can't read them...")
+			. += span_warning("Эээ... Я не могу их прочитать...")
 			return
 		for(var/i in 1 to length(GLOB.laws_of_the_land))
 			. += span_small("[i]. [GLOB.laws_of_the_land[i]]")
@@ -46,7 +46,7 @@
 		next_decree = world.time + rand(3 MINUTES, 8 MINUTES)
 		if(GLOB.lord_decrees.len)
 			if(speaking)
-				say("The [TITLE_LORD] Decrees: [pick(GLOB.lord_decrees)]", spans = list("info"))
+				say("Декрет [TITLE_LORD]: [pick(GLOB.lord_decrees)]", spans = list("info"))
 
 /obj/structure/roguemachine/scomm/attack_hand(mob/living/user)
 	. = ..()
@@ -56,17 +56,17 @@
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	if(called_by && !calling)
 		calling = called_by
-		calling.say("Jabberline fused.", spans = list("info"))
-		say("Jabberline fused.", spans = list("info"))
+		calling.say("Линия связи соединена.", spans = list("info"))
+		say("Линия связи соединена.", spans = list("info"))
 		update_icon()
 		return
 	if(calling)
 		listening = !listening
-		to_chat(user, span_info("I [listening ? "unmute" : "mute"] the input on the SCOM."))
+		to_chat(user, span_info("Я [listening ? "включаю" : "выключаю"] вход на СКОМ."))
 		return
 	listening = !listening
 	speaking = listening
-	to_chat(user, span_info("I [speaking ? "unmute" : "mute"] the SCOM."))
+	to_chat(user, span_info("Я [speaking ? "включаю" : "выключаю"] СКОМ."))
 	update_icon()
 
 /obj/structure/roguemachine/scomm/attack_right(mob/user)
@@ -75,21 +75,21 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	if(called_by && !calling)
-		called_by.say("Jabberline refused.", spans = list("info"))
-		say("Jabberline refused.", spans = list("info"))
+		called_by.say("Линия связи отклонена.", spans = list("info"))
+		say("Линия связи отклонена.", spans = list("info"))
 		called_by.calling = null
 		called_by = null
 		return
 	if(calling)
 		speaking = !speaking
-		to_chat(user, span_info("I [speaking ? "unmute" : "mute"] the output on the SCOM."))
+		to_chat(user, span_info("Я [speaking ? "включаю" : "выключаю"] выход на СКОМ."))
 		return
 	var/canread = user.can_read(src, TRUE)
 	var/contents
 	if(SSticker.rulertype == "Duke")
-		contents += "<center>DUKE'S DECREES<BR>"
+		contents += "<center>ДЕКРЕТЫ ГЕРЦОГА<BR>"
 	else
-		contents += "<center>DUCHESS' DECREES<BR>"
+		contents += "<center>ДЕКРЕТЫ ГЕРЦОГИНИ<BR>"
 	contents += "-----------<BR><BR></center>"
 	for(var/i = GLOB.lord_decrees.len to 1 step -1)
 		contents += "[i]. <span class='info'>[GLOB.lord_decrees[i]]</span><BR>"
@@ -105,7 +105,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	if(calling)
-		calling.say("Jabberline severed.", spans = list("info"))
+		calling.say("Линия связи разорвана.", spans = list("info"))
 		if(calling.calling == src)
 			var/obj/structure/roguemachine/scomm/old_calling = calling
 			old_calling.called_by = null
@@ -115,31 +115,31 @@
 		calling = null
 		called_by = null
 		speaking = listening
-		to_chat(user, span_info("I cut the jabberline."))
-		say("Jabberline severed.", spans = list("info"))
+		to_chat(user, span_info("Я разрываю линию связи."))
+		say("Линия связи разорвана.", spans = list("info"))
 		update_icon()
 	else
-		say("Input SCOM designation.", spans = list("info"))
-		var/nightcall = input(user, "Input the number you have been provided with.", "INTERFACING") as null|num
+		say("Введите обозначение СКОМ.", spans = list("info"))
+		var/nightcall = input(user, "Введите номер, который вам был предоставлен.", "ИНТЕРФЕЙС") as null|num
 		if(!nightcall)
 			return
 		if(nightcall == scom_number)
-			to_chat(user, span_warning("Nothing but rats squeaking back at you."))
+			to_chat(user, span_warning("Ничего, кроме писка крыс в ответ."))
 			playsound(src, 'sound/vo/mobs/rat/rat_life.ogg', 100, TRUE, -1)
 			return
 		if(SSroguemachine.scomm_machines.len < nightcall)
-			say("There are no rats running this jabberline.", spans = list("info"))
+			say("Нет крыс, управляющих этой линией связи.", spans = list("info"))
 			return
 		var/obj/structure/roguemachine/scomm/S = SSroguemachine.scomm_machines[nightcall]
 		if(!S)
-			to_chat(user, span_warning("Nothing but rats squeaking back at you."))
+			to_chat(user, span_warning("Ничего, кроме писка крыс в ответ."))
 			playsound(src, 'sound/vo/mobs/rat/rat_life.ogg', 100, TRUE, -1)
 			return
 		if(S.calling || S.called_by)
-			say("This jabberline's rats are occupied.", spans = list("info"))
+			say("Крысы этой линии связи заняты.", spans = list("info"))
 			return
 		if(!S.speaking)
-			say("This jabberline's rats have been gagged.", spans = list("info"))
+			say("Крысы этой линии связи были заглушены.", spans = list("info"))
 			return
 		calling = S
 		S.called_by = src
@@ -154,14 +154,14 @@
 			calling.ring_ring()
 			ring_ring()
 			sleep(30)
-		say("This jabberline's rats are exhausted.", spans = list("info"))
+		say("Крысы этой линии связи истощены.", spans = list("info"))
 		calling.called_by = null
 		calling = null
 		update_icon()
 
 /obj/structure/roguemachine/scomm/obj_break(damage_flag)
 	..()
-	calling?.say("Jabberline severed.", spans = list("info"))
+	calling?.say("Линия связи разорвана.", spans = list("info"))
 	calling?.speaking = calling?.listening
 	calling?.called_by = null
 	calling?.calling = null
@@ -226,7 +226,7 @@
 	if(H.voicecolor_override)
 		usedcolor = H.voicecolor_override
 	if(raw_message)
-		if(lowertext(raw_message) == pick("say laws.", "state laws."))
+		if(lowertext(raw_message) == pick("скажи законы.", "озвучь законы."))
 			dictate_laws()
 		if(calling)
 			if(calling.calling == src)
@@ -244,13 +244,13 @@
 	if(dictating)
 		return
 	dictating = TRUE
-	repeat_message("THE LAWS OF THE LAND ARE...", tcolor = COLOR_RED)
+	repeat_message("ЗАКОНЫ ЗЕМЛИ ТАКОВЫ...", tcolor = COLOR_RED)
 	INVOKE_ASYNC(src, PROC_REF(dictation))
 
 /obj/structure/roguemachine/scomm/proc/dictation()
 	if(!length(GLOB.laws_of_the_land))
 		sleep(2)
-		repeat_message("THE LAND HAS NO LAWS!", tcolor = COLOR_RED)
+		repeat_message("У ЗЕМЛИ НЕТ ЗАКОНОВ!", tcolor = COLOR_RED)
 		dictating = FALSE
 		return
 	for(var/i in 1 to length(GLOB.laws_of_the_land))
@@ -266,9 +266,9 @@
 //SCOMSTONE                 SCOMSTONE
 
 /obj/item/scomstone
-	name = "gemerald ring"
+	name = "кольцо с изумрудом"
 	icon_state = "scomstone"
-	desc = "A golden ring with an gemerald gem."
+	desc = "Золотое кольцо с изумрудным камнем."
 	gripped_intents = null
 	dropshrink = 0.75
 	possible_item_intents = list(INTENT_GENERIC)
@@ -285,7 +285,7 @@
 
 /obj/item/scomstone/attack_right(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	var/input_text = input(user, "Enter your message:", "Message")
+	var/input_text = input(user, "Введите ваше сообщение:", "Сообщение")
 	if(input_text)
 		for(var/obj/structure/roguemachine/scomm/S in SSroguemachine.scomm_machines)
 			S.repeat_message(input_text)
@@ -301,7 +301,7 @@
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	listening = !listening
 	speaking = !speaking
-	to_chat(user, span_info("I [speaking ? "unmute" : "mute"] the scomstone."))
+	to_chat(user, span_info("Я [speaking ? "включаю" : "выключаю"] скомстон."))
 	update_icon()
 
 /obj/item/scomstone/Destroy()
@@ -362,7 +362,7 @@
 			S.repeat_message(raw_message, src, usedcolor, message_language)//make the listenstone hear scomstone scream
 
 /obj/item/scomstone/bad
-	name = "serfstone"
+	name = "серфстоун"
 	icon_state = "scomstone"
 	listening = FALSE
 	sellprice = 2
@@ -371,9 +371,9 @@
 	return
 //LISTENSTONE		LISTENSTONE
 /obj/item/listenstone
-	name = "gemerald choker"
+	name = "изумрудный ошейник"
 	icon_state = "listenstone"
-	desc = "A iron and gold choker with an gemerald gem."
+	desc = "Железный ошейник покрытый золотом, с изумрудным камнем."
 	gripped_intents = null
 	//dropshrink = 0.75
 	possible_item_intents = list(INTENT_GENERIC)
@@ -396,7 +396,7 @@
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	listening = !listening
 	speaking = !speaking
-	to_chat(user, span_info("I [speaking ? "unmute" : "mute"] the scomstone."))
+	to_chat(user, span_info("Я [speaking ? "включаю" : "выключаю"] скомстон."))
 	update_icon()
 	if(listening)
 		icon_state = "listenstone"
